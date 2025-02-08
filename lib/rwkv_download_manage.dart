@@ -72,7 +72,7 @@ class RWKVDownloadManage {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? cachePath;
     cachePath = prefs.getString(downloadUrl);
-    if (cachePath != null && cachePath.isNotEmpty) {
+    if (cachePath.isNotEmpty) {
       callBack(1.0, RWKVDownloadTaskStatus.unpressFinish, cachePath);
       return;
     }
@@ -125,7 +125,8 @@ class RWKVDownloadManage {
               debugPrint('depress=${entry.size}');
             },
           );
-          callBack(progress, RWKVDownloadTaskStatus.unpressFinish, path);
+          callBack(progress, RWKVDownloadTaskStatus.unpressFinish,
+              '$cachePath/$fileNameWithoutExtension');
 
 // Save an integer value to 'counter' key.
           await prefs.setString(
