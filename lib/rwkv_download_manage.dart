@@ -72,7 +72,7 @@ class RWKVDownloadManage {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? cachePath;
     cachePath = prefs.getString(downloadUrl);
-    if (cachePath.isNotEmpty) {
+    if (cachePath != null && cachePath.isNotEmpty) {
       callBack(1.0, RWKVDownloadTaskStatus.unpressFinish, cachePath);
       return;
     }
