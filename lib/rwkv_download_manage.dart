@@ -119,13 +119,14 @@ class RWKVDownloadManage {
           debugPrint('Success path=$path');
           callBack(progress, RWKVDownloadTaskStatus.complete, path);
           callBack(progress, RWKVDownloadTaskStatus.unpressStart, path);
-          await extractFileToDisk(
-            path,
-            cachePath,
-            callback: (ArchiveFile entry) {
-              debugPrint('depress=${entry.size}');
-            },
-          );
+          // await extractFileToDisk(
+          //   path,
+          //   cachePath,
+          //   callback: (ArchiveFile entry) {
+          //     debugPrint('depress=${entry.size}');
+          //   },
+          // );
+          await unzipFile(path, cachePath);
           callBack(progress, RWKVDownloadTaskStatus.unpressFinish,
               '$cachePath/$fileNameWithoutExtension');
 
@@ -183,7 +184,7 @@ class RWKVDownloadManage {
     return await directory.exists();
   }
 
-  Future<void> unzipfile(String zipPath, String destiPath) async {
+  static Future<void> unzipFile(String zipPath, String destiPath) async {
     final zipFile = File(zipPath);
     final destiDirectory = Directory(destiPath);
     await ZipFile.extractToDirectory(
