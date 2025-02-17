@@ -109,6 +109,9 @@ class RWKVDownloadManage {
       },
       onStatus: (status) {
         debugPrint('Status: $status');
+        if (status == TaskStatus.failed) {
+          callBack(progress, RWKVDownloadTaskStatus.fail, null);
+        }
       },
     );
 
