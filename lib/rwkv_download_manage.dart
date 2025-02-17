@@ -1,10 +1,11 @@
 import 'dart:io';
 // import 'dart:isolate';
 
-import 'package:archive/archive_io.dart';
+// import 'package:archive/archive_io.dart';
 import 'package:background_downloader/background_downloader.dart';
 import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_archive/flutter_archive.dart';
 import 'package:rwkv_model_download/download_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter_downloader/flutter_downloader.dart';
@@ -175,5 +176,27 @@ class RWKVDownloadManage {
     //     IsolateNameServer.lookupPortByName('downloader_send_port');
     // send?.send([id, status, progress]);
     debugPrint('id==$id,status==$status,status==$progress');
+  }
+
+  Future<bool> directoryExists(String path) async {
+    final directory = Directory(path);
+    return await directory.exists();
+  }
+
+  Future<void> unzipfile(String zipPath, String destiPath) async {
+    final zipFile = File(zipPath);
+    final destiDirectory = Directory(destiPath);
+    await ZipFile.extractToDirectory(
+      zipFile: zipFile,
+      destinationDir: destiDirectory,
+      onExtracting: (zipEntry, progress) {
+        debugPrint('progress:${progress.toStringAsFixed(1)}%');
+        debugPrint('uncompressSize=${zipEntry.uncompressedSize}');
+        debugPrint('compressSize=${zipEntry.compressedSize}');
+        return ZipFileOperation.includeItem;
+      },
+    );
+
+    debugPrint('unzipfile success');
   }
 }

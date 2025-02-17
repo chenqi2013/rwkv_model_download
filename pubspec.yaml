@@ -16,8 +16,10 @@ dependencies:
   background_downloader: ^8.9.4
   # flutter_downloader: ^1.11.8
   dart_ping: ^9.0.1
-  archive: ^4.0.2
+  # archive: ^4.0.2
   shared_preferences: ^2.5.1
+  flutter_archive: ^6.0.3
+
 
 dev_dependencies:
   flutter_test:
